@@ -41,18 +41,6 @@ const renderEventList = () => {
   eventsList.replaceChildren(...ulEvents);
 }
 
-// const renderEventDates = () => {
-//   const eventsDate = document.querySelector('#events-date');
-//   console.log(eventsDate);
-//   const liDates = state.eventList.map( (events) => {
-//     const li = document.createElement('li');
-//     li.innerHTML = events.date;
-//     // console.log(events.date)
-//     return li;
-//   })
-//   eventsDate.replaceChildren(...liDates);
-// }
-
 const render = async () => {
   await getEventList();
   // console.log(state.eventList);
