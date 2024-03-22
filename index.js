@@ -1,38 +1,42 @@
 const API_URL ="https://fsa-crud-2aa9294fe819.herokuapp.com/api/2402-FTB-ET-WEB-FT/events"; // 2402-FTB-ET-WEB-FT
 
 const state = {
-  events: [],
+  eventList: [],
 }
 
-const eventList = document.querySelector("#events");
-
-const addEventForm = document.querySelector("#addEvent");
-addEventForm.addEventListener("submit", addEvent);
-
-async function render() {
-  await getEvents();
-  renderEvents();
-};
-render();
+const eventHeading = document.querySelector('#heading');
+const headingText = document.createTextNode('Events Lists');
+eventHeading.appendChild(headingText);
+eventHeading.style.color = 'blue';
 
 
-async function getEvents() {
-  try{
+const getEventList = async () => {
+  try {
     const response = await fetch(API_URL);
-    // console.log(response);
+    // console.log(`Response: `, response);
     const json = await response.json();
-    // console.log(json);
-    // console.log(json.date)
-
-  } catch (error){
-    console.log(error);
+    console.log(`JSON: `, json);
+    state.eventList = json.data;
+  } catch(error) {
+    console.error(`ERROR OCCURED`);
   }
-};
-
-function renderEvents () {
-  // state.events.forEach( (event) => {
-  //   const li = document.createElement('li');
-  //   li.innerHTML = `${event.name} - ${event.description}`;
-  //   eventList.appendChild(li);
-  // }); 
 }
+
+const renderEventList = () => {
+  const eventsList = document.querySelector('#eventsList')
+  const liEvents = state.eventList.map( (events) => {
+    const li = document.createElement('li');
+    li.innerHTML = events.name;
+    // console.log(events.name);
+    return li;
+  });
+  eventsList.replaceChildren(...liEvents);
+}
+
+const render = async () => {
+  await getEventList();
+  // console.log(state.eventList);
+  renderEventList();
+}
+
+render();
