@@ -9,6 +9,8 @@ const headingText = document.createTextNode('Events Lists');
 eventHeading.appendChild(headingText);
 eventHeading.style.color = 'blue';
 
+const eventsDate = document.querySelector('#events-date');
+
 
 const getEventList = async () => {
   try {
@@ -24,19 +26,38 @@ const getEventList = async () => {
 
 const renderEventList = () => {
   const eventsList = document.querySelector('#eventsList')
-  const liEvents = state.eventList.map( (events) => {
+  const ulEvents = state.eventList.map( (event) => {
     const li = document.createElement('li');
-    li.innerHTML = events.name;
+    li.innerHTML = `
+      <p>Event: ${event.name}</p>
+      <p>Date: ${event.date}</p>
+      <p>ID: ${event.id}</p>
+      <p>Location: ${event.location}</p>
+      <p>Description: ${event.description}
+    `;
     // console.log(events.name);
     return li;
   });
-  eventsList.replaceChildren(...liEvents);
+  eventsList.replaceChildren(...ulEvents);
 }
+
+// const renderEventDates = () => {
+//   const eventsDate = document.querySelector('#events-date');
+//   console.log(eventsDate);
+//   const liDates = state.eventList.map( (events) => {
+//     const li = document.createElement('li');
+//     li.innerHTML = events.date;
+//     // console.log(events.date)
+//     return li;
+//   })
+//   eventsDate.replaceChildren(...liDates);
+// }
 
 const render = async () => {
   await getEventList();
   // console.log(state.eventList);
   renderEventList();
+  // renderEventDates();
 }
 
 render();
